@@ -17,9 +17,16 @@ def main():
         temp = parte.split("-")
         rangos.append((int(temp[0]), int(temp[1])))
     
+    suma = 0
     for r in rangos:
         for i in range(r[0], r[1] + 1):
-            pass
+            string = str(i)
+            longitud = len(string)
+            if longitud % 2 != 0:
+                continue
+            if string[:longitud // 2] == string[longitud // 2:]:
+                suma += i
+    print(suma)
 
 if __name__ == "__main__":
     main()
