@@ -1,6 +1,5 @@
-def main():
-    print("Hello from aoc2025!")
+from read_data import read_data_web, save_data
+import sys
 
-
-if __name__ == "__main__":
-    main()
+data = read_data_web()
+save_data(sys.argv[1], data)
