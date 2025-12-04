@@ -1,24 +1,23 @@
-from pathlib import Path
 import sys
-import traceback
+from pathlib import Path
 
 from read_data import read_data_file, read_data_web, save_data
 
 
 class ScrollsLibrary:
     def __init__(self, lines: list[str]) -> None:
-        self.lines = lines
-        self.number_lines = len(lines)
-        self.long_line = len(lines[0])
+        self.lines: list[list[str]]
+        self.lines = [list(line) for line in lines if line]
+        self.number_lines: int = len(lines)
+        self.long_line: int = len(lines[0])
         self.scrolls_count: int = 0
         self.current_line: int = 0
-        # self.count_scrolls()
-        self.removable_scrolls = []
-        self.removed_scrolls = 0
+        self.removable_scrolls: list = []
+        self.removed_scrolls: int = 0
         while self.count_scrolls() > 0:
             self.remove_scrolls()
         print(f"Total removed scrolls: {self.removed_scrolls}")
-    
+
     def count_scrolls(self) -> int:
         scrolls = 0
         for i in range(0, self.number_lines):
@@ -45,7 +44,6 @@ class ScrollsLibrary:
         for i, j in self.removable_scrolls:
             self.lines[i][j] = "."
             self.removed_scrolls += 1
-            # self.lines[i] = "".join(line)
         self.removable_scrolls.clear()
         self.scrolls_count = 0
 
@@ -57,19 +55,27 @@ class ScrollsLibrary:
             if self.lines[self.current_line][k] == "@":
                 count += 1
         return count
-    
+
     def check_prev_line(self) -> int:
         count = 0
-        for k in [self.current_column - 1, self.current_column, self.current_column + 1]:
+        for k in [
+            self.current_column - 1,
+            self.current_column,
+            self.current_column + 1,
+        ]:
             if k == -1 or k == self.long_line:
                 continue
             if self.lines[self.current_line - 1][k] == "@":
                 count += 1
         return count
-    
+
     def check_next_line(self) -> int:
         count = 0
-        for k in [self.current_column - 1, self.current_column, self.current_column + 1]:
+        for k in [
+            self.current_column - 1,
+            self.current_column,
+            self.current_column + 1,
+        ]:
             if k == -1 or k == self.long_line:
                 continue
             if self.lines[self.current_line + 1][k] == "@":
@@ -89,7 +95,6 @@ def main():
     data = file.read_text()
     lineas = data.split("\n")
     library = ScrollsLibrary(lineas)
-
 
 
 if __name__ == "__main__":
