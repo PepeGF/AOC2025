@@ -7,12 +7,12 @@ from read_data import read_data_file, read_data_web, save_data
 class Cafeteria:
     def __init__(self, data: str) -> None:
         self.data = data
-        self.rangos, self.numeros = self.data.split("\n\n")
-        self.rangos = sorted([list(map(int, rango.split("-"))) for rango in self.rangos.split("\n")])
+        self.rangos_str, self.numeros_str = self.data.split("\n\n")
+        self.rangos: list[list[int]] = sorted([list(map(int, rango.split("-"))) for rango in self.rangos_str.split("\n")])
         with open("rangos.txt", "w") as f:
             for rango in self.rangos:
                 f.write(f"{rango}\n")
-        self.numeros = list(int(numero) for numero in self.numeros.split("\n"))
+        self.numeros: list[int] = list(int(numero) for numero in self.numeros_str.split("\n"))
         print(len(self.rangos), len(self.numeros))
         self.checkfreshness()
         print(self.frescos)
