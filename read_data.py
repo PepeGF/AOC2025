@@ -24,7 +24,8 @@ def read_data_file(day: str) -> str:
         return f.read()
 
 
-def save_data(day: str, data: str) -> None:
-    data = read_data_web()
+def save_data(day: str, data: str = None) -> None:
+    if data is None:
+        data = read_data_web()
     with open(f"dia{day}/input.txt", "w", encoding="utf-8") as f:
-        f.write(data)
+        f.write(data[:-1])  # remove last \n
